@@ -93,8 +93,8 @@ if [ -z "$LATEST_VERSION" ]; then
     exit 1
 fi
 
-mkdir ~/shadowsocks-tmp
-mkdir ~/shadowsocks-tmp/bin
+mkdir -p ~/shadowsocks-tmp
+mkdir -p ~/shadowsocks-tmp/bin
 
 cd ~/shadowsocks-tmp
 
