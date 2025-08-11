@@ -245,10 +245,11 @@ fi
 
 setcap 'CAP_NET_BIND_SERVICE+ep' /usr/local/bin/ssserver
 
+# this is so the non-root user can access ports below 1024
 # routing perms can be acquired through 'CAP_NET_BIND_SERVICE,CAP_NET_ADMIN+ep'
 
 # -----
-# create ssuser
+# create ssuser (non-root user for shadowsocks)
 # -----
 
 if id "ssuser" &>/dev/null; then
@@ -261,6 +262,10 @@ fi
 # Prompt for and set the user's password
 echo "Please enter a password for 'ssuser':"
 passwd "ssuser"
+
+# -----
+# shadowsocks configuration file
+# -----
 
 if [ ! -e /home/ssuser/shadowsocks-server.json ]; then
   cat <<EOF > /home/ssuser/shadowsocks-server.json
