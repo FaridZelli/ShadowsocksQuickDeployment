@@ -1,5 +1,5 @@
 # 🌍 Shadowsocks Quick Deployment
-Get shadowsocks up and running on any server.
+Get [shadowsocks-rust](https://github.com/shadowsocks/shadowsocks-rust) up and running on any server.
    
 ⓘ This script must be run as **root**.
    
