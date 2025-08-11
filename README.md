@@ -8,6 +8,4 @@ Get [shadowsocks-rust](https://github.com/shadowsocks/shadowsocks-rust) up and r
   ```
 ## 🛣️ Future Roadmap
 - [ ] Security review
-- [ ] Architecture auto-detection
 - [ ] WARP deployment
-- [ ] (Bonus) Wstunnel script
