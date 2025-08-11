@@ -35,11 +35,15 @@ case $ANSWER in
   [Yy]* )
     # Proceed to uninstall
     echo "Uninstalling..."
+    systemctl stop shadowsocks.service
+    systemctl disable shadowsocks.service
     rm -rf ~/shadowsocks-tmp
     rm -rf /etc/ssh/sshd_config.d/01-ssh-hardening.conf
     rm -rf /etc/sysctl.d/01-shadowsocks-optimizer.conf
     rm -rf /etc/systemd/system/shadowsocks.service
     rm -rf /home/ssuser/shadowsocks-server.json
+    systemctl daemon-reload
+    sysctl --system
     setcap -r /usr/local/bin/ssserver
     rm -rf /usr/local/bin/sslocal
     rm -rf /usr/local/bin/ssmanager
@@ -96,6 +100,8 @@ tar -xf shadowsocks-*.x86_64-unknown-linux-gnu.tar.xz -C ~/shadowsocks-tmp/bin
 mv ~/shadowsocks-tmp/bin/* /usr/local/bin/
 
 rm -rf ~/shadowsocks-tmp
+
+echo "Installed Shadowsocks to /usr/local/bin"
 
 # -----
 # sshd_config
