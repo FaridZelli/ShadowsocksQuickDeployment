@@ -2,7 +2,7 @@
 
 # Script by Farid Zellipour
 # https://github.com/FaridZelli
-# Last updated 2025-08-11 6:04 AM
+# Last updated 2025-08-11 9:02 PM
 
 # Check the current user
 USER=$(whoami)
@@ -223,9 +223,13 @@ Detected System C Library: $C_LIBRARY"
 LATEST_VERSION=$(curl -s https://api.github.com/repos/shadowsocks/shadowsocks-rust/releases/latest | grep -Po '"tag_name":\s*"\K.*?(?=")')
 
 download_failed() {
+    echo -e "
+\033[33mWe were unable to fetch the latest shadowsocks-rust release from GitHub at this time.
+If you have previously downloaded Shadowsocks binaries locally, please enter the directory in which they are stored.
+
+Example: ~/Downloads\033[0m"
     read -p "
-We are unable to download the latest shadowsocks-rust release from GitHub at this time.
-If you have already downloaded Shadowsocks binaries locally, please enter the directory in which they are stored: " dir
+Directory (leave empty and press enter to exit): " dir
 
     # Check if directory exists
     if [[ ! -d "$dir" ]]; then
@@ -444,7 +448,10 @@ Started shadowsocks.service"
 # End of script
 echo -e "
 --------------------------------------------------
+
 \033[32mIt's time to reboot!\033[0m
+
 Your Shadowsocks configuration is located at:
 /home/ssuser/shadowsocks-server.json
+
 --------------------------------------------------"
