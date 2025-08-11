@@ -86,6 +86,13 @@ esac
 # get shadowsocks
 # -----
 
+LATEST_VERSION=$(curl -s https://api.github.com/repos/shadowsocks/shadowsocks-rust/releases/latest | grep -Po '"tag_name":\s*"\K.*?(?=")')
+
+if [ -z "$LATEST_VERSION" ]; then
+    echo "Could not get the latest version of shadowsocks-rust. Stopping the script..."
+    exit 1
+fi
+
 mkdir ~/shadowsocks-tmp
 mkdir ~/shadowsocks-tmp/bin
 
