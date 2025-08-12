@@ -10,8 +10,7 @@ Get [shadowsocks-rust](https://github.com/shadowsocks/shadowsocks-rust) up and r
 
 ## 📝 What does this script do?
 1. Fetches the latest Shadowsocks release for your hardware
-2. Applies performance tweaks
-3. Installs Shadowsocks as a service and provides a default environment for ssserver
+2. Installs Shadowsocks as a service and provides an optimized default environment for ssserver
 
 ## 💡 Features
 
