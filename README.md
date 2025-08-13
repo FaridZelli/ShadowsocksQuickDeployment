@@ -24,4 +24,4 @@ Get [shadowsocks-rust](https://github.com/shadowsocks/shadowsocks-rust) up and r
 - [ ] Cloudflare WARP deployment
 
 ## 🐧 Supported Distributions:
-While this script is primarily tested on **Ubuntu 24.04**, it should also for any Ubuntu/Debian-like environment.
+While this script is only tested on **Ubuntu 24.04**, it should work on most Ubuntu/Debian-based distros.
