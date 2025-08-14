@@ -2,7 +2,7 @@
 
 # Script by Farid Zellipour
 # https://github.com/FaridZelli
-# Last updated 2025-08-11 9:02 PM
+# Last updated 2025-08-14 4:14 AM
 
 # Check the current user
 USER=$(whoami)
@@ -545,9 +545,8 @@ Encryption:  \033[32m$raw_method\033[0m
 
 --------------------------------------------------"
 
-break
-
-        ;;
+    break
+  ;;
 
   [Nn]* )
 
@@ -582,15 +581,14 @@ Your Shadowsocks configuration is located at:
 
 --------------------------------------------------"
 
-break
-
-        ;;
+    break
+  ;;
   * )
     # Stop the script for any other input
     echo -e "\033[31mInvalid input.\033[0m
 "
     continue
-    ;;
+  ;;
 
 esac
 done
@@ -600,7 +598,7 @@ else
 # existing shadowsocks-server.json detected
 # -----
 
-  echo -e "
+echo -e "
 An existing configuration file was detected and will now be opened for manual editing.
 
 Tip: You can save your changes by pressing \033[34mCtrl+O\033[0m then \033[34mEnter\033[0m in nano.
