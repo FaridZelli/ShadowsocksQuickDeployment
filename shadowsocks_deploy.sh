@@ -418,7 +418,7 @@ if [ ! -e /home/ssuser/shadowsocks-server.json ]; then
   cat <<EOF > /home/ssuser/shadowsocks-server.json
 {
   "server": "your_server_ip",
-  "server_port": 8388,
+  "server_port": your_preferred_port,
   "password": "your_secure_password",
   "method": "chacha20-ietf-poly1305",
   "mode": "tcp_and_udp",
@@ -430,28 +430,201 @@ if [ ! -e /home/ssuser/shadowsocks-server.json ]; then
   // "keep_alive": 60
 }
 EOF
-  echo "
-Created /home/ssuser/shadowsocks-server.json"
+  echo -e "
+A new Shadowsocks configuration file has been created at /home/ssuser/shadowsocks-server.json
+
+\033[33mWould you like to configure Shadowsocks interactively? (Y/N)\033[0m
+"
+# User input
+while :; do
+read -p "Your choice:" ANSWER
+# Read input
+case $ANSWER in
+  [Yy]* )
+
+# -----
+# interactive setup
+# -----
+
+SERVER_CONFIG="/home/ssuser/shadowsocks-server.json"
+
+    # Generate a new key
+    ssservice_generated_pass="$(ssservice genkey -m chacha20-ietf-poly1305)"
+    # Replace your_secure_password
+    sed -i "s|your_secure_password|${ssservice_generated_pass}|g" "$SERVER_CONFIG"
+
+while :; do
+  read -rp "
+Enter your server's public IPv4 address (or 'skip' to change it later): " val
+  [[ $val == skip ]] && break
+
+  if [[ -z $val ]]; then
+    echo -e "\033[31mInvalid input: The IP address cannot be blank.\033[0m"
+    continue
+  fi
+
+  if [[ $val =~ [[:space:]] ]]; then
+    echo -e "\033[31mInvalid input: The IP address must not contain spaces.\033[0m"
+    continue
+  fi
+
+  if [[ $val =~ ^([0-9]{1,3}\.){3}[0-9]{1,3}$ ]]; then
+    IFS='.' read -r -a o <<<"$val"
+    if (( o[0]<256 && o[1]<256 && o[2]<256 && o[3]<256 )); then
+      sed -i "s/\"your_server_ip\"/\"$val\"/" "$SERVER_CONFIG"
+      break
+    fi
+  fi
+  read -rp "That IP address doesn't seem right. Would you like to use it anyway? (Y/N): " yn
+  [[ $yn =~ ^[Yy] ]] && { sed -i "s/\"your_server_ip\"/\"$val\"/" "$SERVER_CONFIG"; break; }
+done
+
+while :; do
+  read -rp "
+Enter your desired port (1–65535 or 'skip' to change it later): " val
+  [[ $val == skip ]] && break
+
+  if [[ -z $val ]]; then
+    echo -e "\033[31mInvalid input: The port cannot be blank.\033[0m"
+    continue
+  fi
+
+  if [[ $val =~ [[:space:]] ]]; then
+    echo -e "\033[31mInvalid input: The port must not contain spaces.\033[0m"
+    continue
+  fi
+
+  if [[ $val =~ ^[0-9]+$ ]] && (( val>=1 && val<=65535 )); then
+    sed -i "s/your_preferred_port/$val/" "$SERVER_CONFIG"
+    break
+  fi
+  read -rp "That port doesn't seem right. Would you like to use it anyway? (Y/N): " yn
+  [[ $yn =~ ^[Yy] ]] && { sed -i "s/your_desired_port/$val/" "$SERVER_CONFIG"; break; }
+done
+
+# Extract values using grep + sed
+raw_server=$(grep -Po '"server"\s*:\s*"\K[^"]+' "$SERVER_CONFIG")
+raw_port=$(grep -Po '"server_port"\s*:\s*\K[^,]+' "$SERVER_CONFIG")
+raw_password=$(grep -Po '"password"\s*:\s*"\K[^"]+' "$SERVER_CONFIG")
+raw_method=$(grep -Po '"method"\s*:\s*"\K[^"]+' "$SERVER_CONFIG")
+
+# Determine display value for server
+if [[ "$raw_server" == "your_server_ip" ]]; then
+  display_server="\033[31mPending Configuration\033[0m"
 else
-  echo "
-Opening /home/ssuser/shadowsocks-server.json"
+  display_server="$raw_server"
 fi
+
+# Determine display value for port
+if [[ "$raw_port" == your_preferred_port ]]; then
+  display_port="\033[31mPending Configuration\033[0m"
+else
+  display_port="$raw_port"
+fi
+
+systemctl daemon-reload
+systemctl enable shadowsocks.service
+
+echo -e "
+Started shadowsocks.service"
+
+# Show results
+
+echo -e "
+--------------------------------------------------
+
+\033[33mSuccess!\033[0m
+
+Your Shadowsocks configuration is located at:
+\033[33m/home/ssuser/shadowsocks-server.json\033[0m
+
+Server:      \033[32m$display_server\033[0m
+Port:        \033[32m$display_port\033[0m
+Password:    \033[32m$raw_password\033[0m
+Encryption:  \033[32m$raw_method\033[0m
+
+--------------------------------------------------"
+
+break
+
+        ;;
+
+  [Nn]* )
+
+# -----
+# manual setup
+# -----
+
+    echo -e "
+The configuration file will now be opened for manual editing.
+
+Tip: You can save your changes by pressing \033[34mCtrl+O\033[0m then \033[34mEnter\033[0m in nano.
+
+\033[33mPress any key to continue...\033[0m"
+
+read -s -n1 -r key
 
 nano /home/ssuser/shadowsocks-server.json
 
 systemctl daemon-reload
 systemctl enable shadowsocks.service
 
-echo "
+echo -e "
+Started shadowsocks.service"
+
+echo -e "
+--------------------------------------------------
+
+\033[33mSuccess!\033[0m
+
+Your Shadowsocks configuration is located at:
+\033[33m/home/ssuser/shadowsocks-server.json\033[0m
+
+--------------------------------------------------"
+
+break
+
+        ;;
+  * )
+    # Stop the script for any other input
+    echo -e "\033[31mInvalid input.\033[0m
+"
+    continue
+    ;;
+
+esac
+done
+else
+
+# -----
+# existing shadowsocks-server.json detected
+# -----
+
+  echo -e "
+An existing configuration file was detected and will now be opened for manual editing.
+
+Tip: You can save your changes by pressing \033[34mCtrl+O\033[0m then \033[34mEnter\033[0m in nano.
+
+\033[33mPress any key to continue...\033[0m"
+
+read -s -n1 -r key
+
+nano /home/ssuser/shadowsocks-server.json
+
+systemctl daemon-reload
+systemctl enable shadowsocks.service
+
+echo -e "
 Started shadowsocks.service"
 
 # End of script
 echo -e "
 --------------------------------------------------
 
-\033[32mIt's time to reboot!\033[0m
+\033[33mSuccess!\033[0m
 
 Your Shadowsocks configuration is located at:
-/home/ssuser/shadowsocks-server.json
+\033[33m/home/ssuser/shadowsocks-server.json\033[0m
 
 --------------------------------------------------"
+fi
