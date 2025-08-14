@@ -2,7 +2,7 @@
 
 # Script by Farid Zellipour
 # https://github.com/FaridZelli
-# Last updated 2025-08-14 4:14 AM
+# Last updated 2025-08-14 4:30 AM
 
 # Check the current user
 USER=$(whoami)
@@ -135,10 +135,10 @@ UsePAM no
 PermitEmptyPasswords no
 EOF
   echo "
-  Created /etc/ssh/sshd_config.d/01-ssh-hardening.conf"
+Created /etc/ssh/sshd_config.d/01-ssh-hardening.conf"
 else
   echo "
-  /etc/ssh/sshd_config.d/01-ssh-hardening.conf already exists! Skipping..."
+/etc/ssh/sshd_config.d/01-ssh-hardening.conf already exists! Skipping..."
 fi
     ;;
   2 )
