@@ -23,5 +23,5 @@ Get [shadowsocks-rust](https://github.com/shadowsocks/shadowsocks-rust) up and r
 - [ ] DNS resolver selection
 - [ ] Cloudflare WARP deployment
 
-## 🐧 Supported Distributions:
+## 🐧 Supported Distributions
 While this script has only been tested on **Ubuntu 24.04**, it should work on most Ubuntu/Debian-based distros.
