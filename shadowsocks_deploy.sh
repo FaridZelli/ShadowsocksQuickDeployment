@@ -2,7 +2,7 @@
 
 # Script by Farid Zellipour
 # https://github.com/FaridZelli
-# Last updated 2025-08-15 6:25 PM
+# Last updated 2025-08-15 8:49 PM
 
 # Check the current user
 USER=$(whoami)
@@ -524,6 +524,7 @@ fi
 
 systemctl daemon-reload
 systemctl enable shadowsocks.service
+systemctl start shadowsocks.service
 
 echo -e "
 Started shadowsocks.service"
@@ -567,6 +568,7 @@ nano /home/ssuser/shadowsocks-server.json
 
 systemctl daemon-reload
 systemctl enable shadowsocks.service
+systemctl start shadowsocks.service
 
 echo -e "
 Started shadowsocks.service"
@@ -611,6 +613,7 @@ nano /home/ssuser/shadowsocks-server.json
 
 systemctl daemon-reload
 systemctl enable shadowsocks.service
+systemctl start shadowsocks.service
 
 echo -e "
 Started shadowsocks.service"
