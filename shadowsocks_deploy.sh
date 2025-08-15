@@ -1,8 +1,8 @@
-#! /bin/bash
+#!/bin/bash
 
 # Script by Farid Zellipour
 # https://github.com/FaridZelli
-# Last updated 2025-08-15 8:49 PM
+# Last updated 2025-08-15 10:23 PM
 
 # Check the current user
 USER=$(whoami)
@@ -40,7 +40,7 @@ Continued use assumes your acceptance of these terms.
 read -p "Your choice:" ANSWER
 # Read input
 case $ANSWER in
-  [Yy]* )
+  Y|y )
     # Proceed to uninstall
     echo -e "
 --------------------------------------------------
@@ -94,7 +94,7 @@ Continued use assumes your acceptance of these terms.
 read -p "Your choice:" ANSWER
 # Read input
 case $ANSWER in
-  [Yy]* )
+  Y|y )
     # Proceed with the rest of the script
     echo -e "
 --------------------------------------------------
@@ -440,7 +440,7 @@ while :; do
 read -p "Your choice:" ANSWER
 # Read input
 case $ANSWER in
-  [Yy]* )
+  Y|y )
 
 # -----
 # interactive setup
@@ -549,7 +549,7 @@ Encryption:  \033[32m$raw_method\033[0m
     break
   ;;
 
-  [Nn]* )
+  N|n )
 
 # -----
 # manual setup
