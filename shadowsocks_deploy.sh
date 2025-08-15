@@ -2,7 +2,7 @@
 
 # Script by Farid Zellipour
 # https://github.com/FaridZelli
-# Last updated 2025-08-14 4:30 AM
+# Last updated 2025-08-15 6:25 PM
 
 # Check the current user
 USER=$(whoami)
@@ -126,8 +126,8 @@ read -p "Your choice:" ANSWER
 case $ANSWER in
   1 )
 mkdir -p /etc/ssh/sshd_config.d
-if [ ! -e /etc/ssh/sshd_config.d/01-ssh-hardening.conf ]; then
-  cat <<EOF > /etc/ssh/sshd_config.d/01-ssh-hardening.conf
+if [ ! -e /etc/ssh/sshd_config.d/00-ssh-hardening.conf ]; then
+  cat <<EOF > /etc/ssh/sshd_config.d/00-ssh-hardening.conf
 PubkeyAuthentication yes
 PasswordAuthentication no
 ChallengeResponseAuthentication no
@@ -135,10 +135,10 @@ UsePAM no
 PermitEmptyPasswords no
 EOF
   echo "
-Created /etc/ssh/sshd_config.d/01-ssh-hardening.conf"
+Created /etc/ssh/sshd_config.d/00-ssh-hardening.conf"
 else
   echo "
-/etc/ssh/sshd_config.d/01-ssh-hardening.conf already exists! Skipping..."
+/etc/ssh/sshd_config.d/00-ssh-hardening.conf already exists! Skipping..."
 fi
     ;;
   2 )
