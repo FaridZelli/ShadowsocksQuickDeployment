@@ -2,7 +2,7 @@
 
 # Script by Farid Zellipour
 # https://github.com/FaridZelli
-# Last updated 2025-08-15 10:23 PM
+# Last updated 2025-08-17 5:37 PM
 
 # Check the current user
 USER=$(whoami)
@@ -49,12 +49,13 @@ case $ANSWER in
     systemctl stop shadowsocks.service
     systemctl disable shadowsocks.service
     rm -rf ~/shadowsocks-tmp
-    rm -rf /etc/ssh/sshd_config.d/01-ssh-hardening.conf
-    rm -rf /etc/sysctl.d/01-shadowsocks-optimizer.conf
+    rm -rf /etc/ssh/sshd_config.d/00-ssh-hardening.conf
+    rm -rf /etc/sysctl.d/10-shadowsocks-optimizer.conf
     rm -rf /etc/systemd/system/shadowsocks.service
     rm -rf /home/ssuser/shadowsocks-server.json
     systemctl daemon-reload
     sysctl --system
+    userdel -r -f ssuser
     setcap -r /usr/local/bin/ssserver
     rm -rf /usr/local/bin/sslocal
     rm -rf /usr/local/bin/ssmanager
@@ -294,8 +295,8 @@ fi
 
 mkdir -p /etc/sysctl.d
 
-if [ ! -e /etc/sysctl.d/01-shadowsocks-optimizer.conf ]; then
-  cat <<EOF > /etc/sysctl.d/01-shadowsocks-optimizer.conf
+if [ ! -e /etc/sysctl.d/10-shadowsocks-optimizer.conf ]; then
+  cat <<EOF > /etc/sysctl.d/10-shadowsocks-optimizer.conf
 # max open files
 fs.file-max = 51200
 # max read buffer
@@ -343,10 +344,10 @@ net.ipv4.tcp_congestion_control = hybla
 # net.ipv4.tcp_congestion_control = cubic
 EOF
   echo "
-Created /etc/sysctl.d/01-shadowsocks-optimizer.conf"
+Created /etc/sysctl.d/10-shadowsocks-optimizer.conf"
 else
   echo "
-/etc/sysctl.d/01-shadowsocks-optimizer.conf already exists! Skipping..."
+/etc/sysctl.d/10-shadowsocks-optimizer.conf already exists! Skipping..."
 fi
 
 sysctl --system
@@ -407,6 +408,7 @@ fi
 
 # Prompt for and set the user's password
 echo "
+A non-root user will be used for the Shadowsocks service.
 Please enter a password for 'ssuser':"
 passwd "ssuser"
 
@@ -424,9 +426,11 @@ if [ ! -e /home/ssuser/shadowsocks-server.json ]; then
   "mode": "tcp_and_udp",
   "no_delay": true,
   "fast_open": true,
-  "ipv6_first": false,
+  // "ipv6_first": false,
+  // "ipv6_only": false,
   // "timeout": 300,
   // "udp_timeout": 300,
+  // "udp_max_associations": 512,
   // "keep_alive": 60
 }
 EOF
