@@ -36,7 +36,7 @@ To setup Shadowsocks on your home network, you'll need:
 1. Install the latest [OpenWrt release](https://openwrt.org/toh/raspberry_pi_foundation/raspberry_pi#installation) on your Raspberry Pi using [Raspberry Pi Imager](https://github.com/raspberrypi/rpi-imager/releases)
 - If on Linux, resize the root filesystem:
 ```
-# Identify the block device and partition number, e.g. /dev/sdxN
+# Identify the block device and partition number; e.g. /dev/sdxN
 lsblk
 
 # Resize the root partition
@@ -46,7 +46,7 @@ cfdisk /dev/sdx
 e2fsck -f /dev/sdxN
 resize2fs /dev/sdxN
 ```
-2. Connect directly to your Pi using an ethernet cable and login to OpenWrt at 192.168.1.1
+2. Directly connect to your Pi using an ethernet cable and login to LuCI at 192.168.1.1
 3. Configure the LAN Interface to obtain an IP Address from the primary router
 - Network > Interfaces > Lan > Edit > Choose "Static Address"  
 - Set a valid static IPv4 address and your primary router's IP as the gateway
