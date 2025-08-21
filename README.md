@@ -61,10 +61,10 @@ ssh root@192.168.X.X
 > Replace `netcologne` with your desired mirror
 ```
 read release arch << EOF
-$(. /home/cyan/Downloads/Test/openwrt_release ; echo ${DISTRIB_RELEASE%.*} $DISTRIB_ARCH)
+$(. /etc/openwrt_release ; echo ${DISTRIB_RELEASE%.*} $DISTRIB_ARCH)
 EOF
 for feed in passwall_packages passwall_luci passwall2; do
-echo "src/gz $feed https://netcologne.dl.sourceforge.net/project/openwrt-passwall-build/releases/packages-$release/$arch/$feed" >> /home/cyan/Downloads/Test/customfeeds.conf
+echo "src/gz $feed https://netcologne.dl.sourceforge.net/project/openwrt-passwall-build/releases/packages-$release/$arch/$feed" >> /etc/opkg/customfeeds.conf
 done
 ```
 ```
