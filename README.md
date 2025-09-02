@@ -87,8 +87,8 @@ opkg update && opkg remove dnsmasq && opkg install dnsmasq-full kmod-nft-tproxy 
 
 ---
 
-Note: You'll need a USB 3.0 to gigabit ethernet adapter.  
-[AX88179 adapters](https://openwrt.org/toh/raspberry_pi_foundation/raspberry_pi#adding_a_usb_to_ethernet_adapter) such as the TP-Link UE306 are known to work well.
+Note: You'll need a USB 3.0 to gigabit ethernet adapter  
+[AX88179 adapters](https://openwrt.org/toh/raspberry_pi_foundation/raspberry_pi#adding_a_usb_to_ethernet_adapter) such as the TP-Link UE306 are known to work well
 
 1. Install the latest [OpenWrt release](https://openwrt.org/toh/raspberry_pi_foundation/raspberry_pi#installation) on your Raspberry Pi using [Raspberry Pi Imager](https://github.com/raspberrypi/rpi-imager/releases)
 - If you're on Linux, resize the root filesystem:
@@ -142,10 +142,10 @@ opkg install kmod-usb-net-asix-ax88179
 - Device: eth0
 - Type: DHCP Client
 9. Verify that everything is detected and working properly. Now, it's time to make the switch:
-- Change the "lan" interface device from "eth0" to "eth1", leaving the gateway blank.
-- Change the "wan" interface device from "eth1" to "eth0".
+- Change the "lan" interface device from "eth0" to "eth1", leaving the gateway blank
+- Change the "wan" interface device from "eth1" to "eth0"
   
-> If you've done everything correctly, you should be able to save and apply the changes without any warnings.
+> If you've done everything correctly, you should be able to save and apply the changes without any warnings
 10. Connect the dongle to your router
 
 ---
