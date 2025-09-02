@@ -68,8 +68,7 @@ echo "src/gz $feed https://netcologne.dl.sourceforge.net/project/openwrt-passwal
 done
 ```
 ```
-wget -O passwall.pub https://netcologne.dl.sourceforge.net/project/openwrt-passwall-build/passwall.pub
-opkg-key add passwall.pub
+wget -O passwall.pub https://netcologne.dl.sourceforge.net/project/openwrt-passwall-build/passwall.pub && opkg-key add passwall.pub
 ```
 ```
 opkg update && opkg remove dnsmasq && opkg install dnsmasq-full kmod-nft-tproxy kmod-nft-socket luci-app-passwall2
