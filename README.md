@@ -31,7 +31,7 @@ To setup Shadowsocks on your home network, you'll need:
 
 There are generally two ways to approach this:
 
-<details><summary><b>Modem-Router <> Pi</b><br>ⓘ Simple, half-bandwidth, no dongle required<br>(click to expand)</summary>
+<details><summary><b>Modem-Router <---> Pi</b><br>ⓘ Simple, half-bandwidth, no dongle required<br>(tap or click to expand)</summary>
 
 ---
 
@@ -83,7 +83,7 @@ opkg update && opkg remove dnsmasq && opkg install dnsmasq-full kmod-nft-tproxy 
 
 </details>
 
-<details><summary><b>Modem-Router > Pi > Router</b><br>ⓘ More flexible, full-bandwidth, harder to setup<br>(click to expand)</summary>
+<details><summary><b>Modem-Router > Pi > Router</b><br>ⓘ More flexible, full-bandwidth, harder to setup<br>(tap or click to expand)</summary>
 
 ---
 
